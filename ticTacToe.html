@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe - Open World Reality</title>
+  <link rel="stylesheet" href="../games.css">
+</head>
+<body>
+  <header>
+    <h1>❌⭕ Tic Tac Toe</h1>
+    <nav>
+      <a href="../games.html">⬅ Back to Games</a>
+    </nav>
+  </header>
+
+  <main class="game-container">
+    <div id="board" class="board"></div>
+    <p id="status">Player X's turn</p>
+    <button onclick="restartGame()">Restart</button>
+  </main>
+
+  <script>
+    const board = document.getElementById("board");
+    const statusText = document.getElementById("status");
+    let currentPlayer = "X";
+    let gameActive = true;
+    let cells = Array(9).fill(null);
+
+    function renderBoard() {
+      board.innerHTML = "";
+      cells.forEach((cell, index) => {
+        const cellDiv = document.createElement("div");
+        cellDiv.classList.add("cell");
+        cellDiv.innerText = cell ? cell : "";
+        cellDiv.addEventListener("click", () => makeMove(index));
+        board.appendChild(cellDiv);
+      });
+    }
+
+    function makeMove(index) {
+      if (!gameActive || cells[index]) return;
+      cells[index] = currentPlayer;
+      renderBoard();
+      checkWinner();
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+      statusText.innerText = `Player ${currentPlayer}'s turn`;
+    }
+
+    function checkWinner() {
+      const winCombos = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      winCombos.forEach(combo => {
+        const [a,b,c] = combo;
+        if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
+          statusText.innerText = `🎉 Player ${cells[a]} Wins!`;
+          gameActive = false;
+        }
+      });
+      if (!cells.includes(null) && gameActive) {
+        statusText.innerText = "It's a Draw!";
+        gameActive = false;
+      }
+    }
+
+    function restartGame() {
+      currentPlayer = "X";
+      gameActive = true;
+      cells = Array(9).fill(null);
+      statusText.innerText = "Player X's turn";
+      renderBoard();
+    }
+
+    renderBoard();
+  </script>
+
+  <style>
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 5px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: white;
+      color: black;
+      font-size: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border: 2px solid black;
+    }
+  </style>
+</body>
+</html>
+
