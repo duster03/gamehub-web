@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors - Open World Reality</title>
+  <link rel="stylesheet" href="../games.css">
+</head>
+<body>
+  <header>
+    <h1>✊✋✌ Rock Paper Scissors</h1>
+    <nav><a href="../games.html">⬅ Back to Games</a></nav>
+  </header>
+
+  <main class="game-container">
+    <div class="choices">
+      <button onclick="play('rock')">✊ Rock</button>
+      <button onclick="play('paper')">✋ Paper</button>
+      <button onclick="play('scissors')">✌ Scissors</button>
+    </div>
+    <p id="result">Choose your move!</p>
+    <button onclick="restartGame()">Restart</button>
+  </main>
+
+  <script>
+    function play(playerChoice) {
+      const choices = ["rock","paper","scissors"];
+      const compChoice = choices[Math.floor(Math.random() * 3)];
+      let result = "";
+
+      if (playerChoice === compChoice) {
+        result = `It's a Draw! You: ${playerChoice} | Computer: ${compChoice}`;
+      } else if (
+        (playerChoice === "rock" && compChoice === "scissors") ||
+        (playerChoice === "paper" && compChoice === "rock") ||
+        (playerChoice === "scissors" && compChoice === "paper")
+      ) {
+        result = `🎉 You Win! You: ${playerChoice} | Computer: ${compChoice}`;
+      } else {
+        result = `😢 You Lose! You: ${playerChoice} | Computer: ${compChoice}`;
+      }
+      document.getElementById("result").innerText = result;
+    }
+
+    function restartGame() {
+      document.getElementById("result").innerText = "Choose your move!";
+    }
+  </script>
+</body>
+</html>

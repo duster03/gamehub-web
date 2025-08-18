@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Guess the Number</title>
+  <style>
+    body { text-align:center; background:#111; color:white; }
+    input { padding:5px; }
+    button { padding:5px 10px; }
+  </style>
+</head>
+<body>
+  <h1>Guess the Number</h1>
+  <p>Pick a number between 1-100</p>
+  <input type="number" id="guess" min="1" max="100">
+  <button onclick="check()">Submit</button>
+  <p id="result"></p>
+  <script>
+    let num=Math.floor(Math.random()*100)+1;
+    function check(){
+      let g=document.getElementById("guess").value;
+      if(g==num) document.getElementById("result").textContent="🎉 Correct!";
+      else if(g<num) document.getElementById("result").textContent="Too Low!";
+      else document.getElementById("result").textContent="Too High!";
+    }
+  </script>
+</body>
+</html>

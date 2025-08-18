@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Match - Open World Reality</title>
+  <link rel="stylesheet" href="../games.css">
+</head>
+<body>
+  <header>
+    <h1>🃏 Memory Card Game</h1>
+    <nav><a href="../games.html">⬅ Back to Games</a></nav>
+  </header>
+
+  <main class="game-container">
+    <div id="memory-board" class="memory-board"></div>
+    <button onclick="restartGame()">Restart</button>
+  </main>
+
+  <script>
+    const symbols = ["🍎","🍌","🍇","🍊","🍉","🍓"];
+    let cards = [...symbols, ...symbols];
+    let flipped = [];
+    let matched = [];
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function renderBoard() {
+      const board = document.getElementById("memory-board");
+      board.innerHTML = "";
+      cards.forEach((symbol, i) => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        if (flipped.includes(i) || matched.includes(symbol)) {
+          card.innerText = symbol;
+        } else {
+          card.innerText = "?";
+          card.addEventListener("click", () => flipCard(i));
+        }
+        board.appendChild(card);
+      });
+    }
+
+    function flipCard(i) {
+      if (flipped.length < 2 && !flipped.includes(i)) {
+        flipped.push(i);
+        renderBoard();
+        if (flipped.length === 2) {
+          setTimeout(checkMatch, 800);
+        }
+      }
+    }
+
+    function checkMatch() {
+      const [a, b] = flipped;
+      if (cards[a] === cards[b]) {
+        matched.push(cards[a]);
+      }
+      flipped = [];
+      renderBoard();
+    }
+
+    function restartGame() {
+      cards = shuffle([...symbols, ...symbols]);
+      flipped = [];
+      matched = [];
+      renderBoard();
+    }
+
+    restartGame();
+  </script>
+
+  <style>
+    .memory-board {
+      display: grid;
+      grid-template-columns: repeat(4, 80px);
+      gap: 10px;
+      justify-content: center;
+    }
+    .card {
+      width: 80px;
+      height: 80px;
+      background: white;
+      color: black;
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border: 2px solid black;
+    }
+  </style>
+</body>
+</html>
+
