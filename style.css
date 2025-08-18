@@ -227,21 +227,21 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #222;   /* dark background */
+  background: #1e1e1e;
   padding: 15px 50px;
 }
 
 header .logo {
-  font-size: 1.8em;
+  font-size: 1.5em;
   font-weight: bold;
-  color: #ff9900;   /* orange logo */
+  color: orange;
 }
 
 header nav a {
   margin-left: 20px;
   text-decoration: none;
   color: #ccc;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 header nav a:hover,
@@ -298,6 +298,7 @@ footer {
   color: #888;
 }
 /* Navbar */
+
 
 
 
