@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Games - Open World Reality</title>
+  <link rel="stylesheet" href="games.css">
+</head>
+<body>
+  <header>
+    <h1>🎮 Open World Reality - Games</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="games.html">Games</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="community.html">Community</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <section class="games-grid">
+    <div class="game-card" onclick="openGame('ticTacToe')">Tic Tac Toe</div>
+    <div class="game-card" onclick="openGame('snake')">Snake</div>
+    <div class="game-card" onclick="openGame('rps')">Rock Paper Scissors</div>
+    <div class="game-card" onclick="openGame('memory')">Memory Game</div>
+    <div class="game-card" onclick="openGame('flappy')">Flappy Bird</div>
+    <div class="game-card" onclick="openGame('guess')">Guess the Number</div>
+  </section>
+
+  <section class="game-container">
+    <iframe id="gameFrame" src="" frameborder="0"></iframe>
+  </section>
+
+  <script src="games.js"></script>
+</body>
+</html>
