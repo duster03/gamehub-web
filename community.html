@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community - GameHub</title>
+  <link rel="stylesheet" href="community.css">
+</head>
+<body>
+  <header>
+    <h1>GameHub Community</h1>
+    <p>Share your thoughts, tips, and scores with other players!</p>
+  </header>
+
+  <main class="community-container">
+    <div class="post-form">
+      <textarea id="postInput" placeholder="Write something..."></textarea>
+      <button onclick="addPost()">Post</button>
+    </div>
+
+    <div id="postsContainer" class="posts-container">
+      <!-- User posts will appear here -->
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 GAMEHUB Community</p>
+  </footer>
+
+  <script src="community.js"></script>
+</body>
+</html>
