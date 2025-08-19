@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #f0f0f0;    
+    background-color: #222;    
 }
 
 /* Header & Navbar */
@@ -59,7 +59,7 @@ margin-bottom: 30px;
 
 .leaderboard h2 {
 text-align: left;
-color: #fff;
+color: #f39c12;
 border-bottom: 2px solid #444;
 padding-bottom: 5px;
 }
