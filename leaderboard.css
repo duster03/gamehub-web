@@ -1,9 +1,8 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    background-color: #1a1a1a;
-    color: white;
+    padding: 20px;
+    background-color: #f0f0f0;    
 }
 
 /* Header & Navbar */
@@ -89,4 +88,5 @@ background-color: #f9f9f9;
 .rank {
 width: 50px;
 }
+
 
