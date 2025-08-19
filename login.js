@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const res = await fetch("https://your-app.vercel.app/api/auth", {
+      const res = await fetch("https://auth-backend-129zadkkj-maheshs-projects-c0a80faf.vercel.app/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "login", username, password })
@@ -33,3 +33,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
