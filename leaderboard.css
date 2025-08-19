@@ -89,9 +89,16 @@ background-color: #333;
 width: 50px;
 }
 
-.tabel td{
+/* Keep names white */
+.table td {
+    color: #fff;
+}
+
+/* Make only Score column orange */
+.table td:last-child {
     color: #f39c12;
 }
+
 
 
 
