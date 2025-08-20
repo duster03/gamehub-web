@@ -2,41 +2,150 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Flappy Bird</title>
+  <title>Flappy Bird - GAMEHUB</title>
   <style>
-    body { text-align:center; background:#111; color:white; }
-    canvas { background:#70c5ce; display:block; margin:20px auto; }
+    body { 
+      text-align:center; 
+      background:#111; 
+      color:white; 
+      font-family:Arial, sans-serif;
+    }
+    h1 {
+      color: orange;
+      margin-top: 20px;
+      text-shadow: 2px 2px black;
+    }
+    canvas { 
+      display:block; 
+      margin:20px auto; 
+      border:3px solid orange; 
+      border-radius:10px;
+    }
+    #restartBtn {
+      display:none;
+      background:orange;
+      color:black;
+      border:none;
+      padding:10px 20px;
+      margin-top:15px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+    #restartBtn:hover {
+      background:darkorange;
+      color:white;
+    }
   </style>
 </head>
 <body>
-  <h1>Flappy Bird</h1>
+  <h1>🐤 Flappy Bird</h1>
   <canvas id="game" width="400" height="500"></canvas>
+  <button id="restartBtn" onclick="restartGame()">Restart Game</button>
+
   <script>
     const cvs=document.getElementById("game"),ctx=cvs.getContext("2d");
     let birdY=200, gravity=2, lift=-30, velocity=0;
-    let pipes=[], score=0;
-    document.addEventListener("keydown",()=>velocity=lift);
+    let pipes=[], score=0, gameOver=false;
+
+    document.addEventListener("keydown",()=>{ if(!gameOver) velocity=lift; });
+
+    function drawBird(x,y){
+      // Body
+      ctx.fillStyle="yellow";
+      ctx.beginPath();
+      ctx.arc(x,y,12,0,Math.PI*2);
+      ctx.fill();
+
+      // Eye
+      ctx.fillStyle="white";
+      ctx.beginPath();
+      ctx.arc(x+5,y-5,4,0,Math.PI*2);
+      ctx.fill();
+
+      ctx.fillStyle="black";
+      ctx.beginPath();
+      ctx.arc(x+6,y-5,2,0,Math.PI*2);
+      ctx.fill();
+
+      // Beak
+      ctx.fillStyle="orange";
+      ctx.beginPath();
+      ctx.moveTo(x+12,y);
+      ctx.lineTo(x+18,y-3);
+      ctx.lineTo(x+18,y+3);
+      ctx.closePath();
+      ctx.fill();
+    }
 
     function draw(){
-      ctx.fillStyle="#70c5ce"; ctx.fillRect(0,0,400,500);
-      velocity+=gravity; birdY+=velocity;
-      ctx.fillStyle="yellow"; ctx.fillRect(50,birdY,20,20);
+      if(gameOver) return;
 
+      // Background gradient
+      let grad=ctx.createLinearGradient(0,0,0,500);
+      grad.addColorStop(0,"#87CEEB");
+      grad.addColorStop(1,"#1E90FF");
+      ctx.fillStyle=grad;
+      ctx.fillRect(0,0,400,500);
+
+      // Bird
+      velocity+=gravity; 
+      birdY+=velocity;
+      drawBird(60,birdY);
+
+      // Pipes
       if(pipes.length===0||pipes[pipes.length-1].x<250){
         let topH=Math.random()*200+50;
-        pipes.push({x:400, top:topH, gap:120});
+        pipes.push({x:400, top:topH, gap:130});
       }
 
-      pipes.forEach(p=>{
+      pipes.forEach((p,i)=>{
         p.x-=3;
         ctx.fillStyle="green";
         ctx.fillRect(p.x,0,40,p.top);
         ctx.fillRect(p.x,p.top+p.gap,40,500);
-        if(50<p.x+40&&70>p.x&& (birdY< p.top||birdY+20>p.top+p.gap)){ alert("Game Over!"); location.reload(); }
-        if(p.x===48) score++;
+
+        ctx.strokeStyle="black"; // outline for pipes
+        ctx.lineWidth=2;
+        ctx.strokeRect(p.x,0,40,p.top);
+        ctx.strokeRect(p.x,p.top+p.gap,40,500);
+
+        // Collision check
+        if(60<p.x+40&&60+12>p.x&& (birdY-12< p.top||birdY+12>p.top+p.gap)){ 
+          endGame();
+        }
+
+        // Score
+        if(p.x===58) score++;
       });
-      ctx.fillStyle="white"; ctx.fillText("Score:"+score,10,20);
+
+      // Score display
+      ctx.fillStyle="white";
+      ctx.font="20px Arial";
+      ctx.fillText("Score: "+score,10,30);
+
+      // Check floor/ceiling
+      if(birdY>500||birdY<0) endGame();
     }
+
+    function endGame(){
+      gameOver=true;
+      ctx.fillStyle="rgba(0,0,0,0.5)";
+      ctx.fillRect(0,200,400,100);
+      ctx.fillStyle="red";
+      ctx.font="28px Arial";
+      ctx.fillText("Game Over!",130,250);
+      ctx.fillStyle="white";
+      ctx.font="18px Arial";
+      ctx.fillText("Final Score: "+score,150,280);
+      document.getElementById("restartBtn").style.display="inline-block";
+    }
+
+    function restartGame(){
+      birdY=200; velocity=0; pipes=[]; score=0; gameOver=false;
+      document.getElementById("restartBtn").style.display="none";
+    }
+
     setInterval(draw,30);
   </script>
 </body>
