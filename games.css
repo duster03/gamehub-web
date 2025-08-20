@@ -25,7 +25,7 @@ nav a {
 }
 
 .game-card {
-  background: #444;
+  background: #000000;
   padding: 30px;
   cursor: pointer;
   border-radius: 10px;
@@ -34,7 +34,7 @@ nav a {
 }
 
 .game-card:hover {
-  background: #00bfff;
+  background: #e7800a;
   transform: scale(1.05);
 }
 
@@ -44,8 +44,8 @@ nav a {
 
 iframe {
   width: 80%;
-  height: 500px;
-  border: 2px solid #00bfff;
+  height: 600px;
+  border: 2px solid #ff9100;
   border-radius: 10px;
   display: none;
 }
