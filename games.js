@@ -6,22 +6,23 @@ function openGame(game) {
       frame.src = "ticTacToe.html";
       break;
     case "snake":
-      frame.src = "games/snake.html";
+      frame.src = "snake.html";
       break;
     case "rps":
-      frame.src = "games/rps.html";
+      frame.src = "rps.html";
       break;
     case "memory":
-      frame.src = "games/memory.html";
+      frame.src = "memory.html";
       break;
     case "flappy":
-      frame.src = "games/flappy.html";
+      frame.src = "flappy.html";
       break;
     case "guess":
-      frame.src = "games/guess.html";
+      frame.src = "guess.html";
       break;
   }
 
   frame.style.display = "block";
 }
+
 
