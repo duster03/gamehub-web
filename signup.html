@@ -28,31 +28,32 @@
     </footer>
 
    <script>
-document.getElementById("signupForm").addEventListener("submit", async function(event) {
-  event.preventDefault();
-
-  const username = document.getElementById("newUsername").value.trim();
-  const password = document.getElementById("newPassword").value.trim();
-
-  const response = await fetch("/api/signup", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
-  });
-
-  const result = await response.json();
-
-  if (response.ok) {
-    alert(result.message);
-    window.location.href = "login.html";
-  } else {
-    alert(result.error);
-  }
-});
-</script>
+        document.getElementById("signupForm").addEventListener("submit", async function(event) {
+          event.preventDefault();
+        
+          const username = document.getElementById("newUsername").value.trim();
+          const password = document.getElementById("newPassword").value.trim();
+        
+          const response = await fetch("/api/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+          });
+        
+          const result = await response.json();
+        
+          if (response.ok) {
+            alert(result.message);
+            window.location.href = "login.html";
+          } else {
+            alert(result.error);
+          }
+        });
+    </script>
 
 </body>
 </html>
+
 
 
 
