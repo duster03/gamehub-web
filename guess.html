@@ -2,27 +2,106 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Guess the Number</title>
+  <title>Guess the Number - GAMEHUB</title>
   <style>
-    body { text-align:center; background:#111; color:white; }
-    input { padding:5px; }
-    button { padding:5px 10px; }
+    body {
+      text-align:center; 
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color:white; 
+      font-family: Arial, sans-serif;
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: gold;
+      text-shadow: 2px 2px 5px black;
+    }
+    p { font-size: 1.2rem; }
+    input {
+      padding:10px;
+      font-size:1rem;
+      border-radius:8px;
+      border:none;
+      text-align:center;
+      width: 120px;
+    }
+    button {
+      padding:10px 20px;
+      margin:10px;
+      font-size:1rem;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      background:gold;
+      color:black;
+      font-weight:bold;
+      transition:0.3s;
+    }
+    button:hover {
+      background:orange;
+      color:white;
+      transform:scale(1.05);
+    }
+    #result {
+      margin-top:15px;
+      font-size:1.3rem;
+      font-weight:bold;
+    }
+    #score {
+      margin-top:10px;
+      font-size:1.1rem;
+    }
   </style>
 </head>
 <body>
-  <h1>Guess the Number</h1>
-  <p>Pick a number between 1-100</p>
+  <h1>🎯 Guess the Number 🎯</h1>
+  <p>Pick a number between <b>1 - 100</b></p>
   <input type="number" id="guess" min="1" max="100">
   <button onclick="check()">Submit</button>
-  <p id="result"></p>
+  <button onclick="restartGame()">Restart</button>
+  
+  <p id="result">Start guessing...</p>
+  <p id="score">Attempts: 0</p>
+
   <script>
-    let num=Math.floor(Math.random()*100)+1;
+    let num = Math.floor(Math.random()*100)+1;
+    let attempts = 0;
+    let gameOver = false;
+
     function check(){
-      let g=document.getElementById("guess").value;
-      if(g==num) document.getElementById("result").textContent="🎉 Correct!";
-      else if(g<num) document.getElementById("result").textContent="Too Low!";
-      else document.getElementById("result").textContent="Too High!";
+      if(gameOver) return;
+      let g = Number(document.getElementById("guess").value);
+      attempts++;
+      if(g === num){
+        document.getElementById("result").textContent = "🎉 Correct! You guessed it!";
+        document.getElementById("result").style.color = "lime";
+        gameOver = true;
+      }
+      else if(g < num){
+        document.getElementById("result").textContent = "⬇ Too Low! Try again.";
+        document.getElementById("result").style.color = "orange";
+      }
+      else{
+        document.getElementById("result").textContent = "⬆ Too High! Try again.";
+        document.getElementById("result").style.color = "red";
+      }
+      document.getElementById("score").textContent = "Attempts: " + attempts;
+    }
+
+    function restartGame(){
+      num = Math.floor(Math.random()*100)+1;
+      attempts = 0;
+      gameOver = false;
+      document.getElementById("result").textContent = "Start guessing...";
+      document.getElementById("result").style.color = "white";
+      document.getElementById("score").textContent = "Attempts: 0";
+      document.getElementById("guess").value = "";
     }
   </script>
 </body>
 </html>
+
