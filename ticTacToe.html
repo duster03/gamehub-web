@@ -3,8 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tic Tac Toe - Open World Reality</title>
-  <link rel="stylesheet" href="../games.css">
+  <title>Tic Tac Toe - GAMEHUB</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      padding: 20px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 5px black;
+      color: gold;
+    }
+    header nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      background: rgba(0,0,0,0.4);
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    header nav a:hover {
+      background: gold;
+      color: black;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 120px);
+      gap: 8px;
+      justify-content: center;
+      margin: 30px auto;
+    }
+    .cell {
+      width: 120px;
+      height: 120px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-size: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border: 3px solid gold;
+      border-radius: 12px;
+      transition: 0.3s ease;
+    }
+    .cell:hover {
+      background: rgba(255,215,0,0.2);
+      transform: scale(1.05);
+    }
+    .cell.win {
+      background: gold !important;
+      color: black !important;
+      animation: glow 1s infinite alternate;
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 10px gold; }
+      to { box-shadow: 0 0 25px gold; }
+    }
+
+    #status {
+      font-size: 1.4rem;
+      margin: 15px;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: gold;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: orange;
+      color: white;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -17,7 +109,7 @@
   <main class="game-container">
     <div id="board" class="board"></div>
     <p id="status">Player X's turn</p>
-    <button onclick="restartGame()">Restart</button>
+    <button onclick="restartGame()">🔄 Restart</button>
   </main>
 
   <script>
@@ -43,8 +135,10 @@
       cells[index] = currentPlayer;
       renderBoard();
       checkWinner();
-      currentPlayer = currentPlayer === "X" ? "O" : "X";
-      statusText.innerText = `Player ${currentPlayer}'s turn`;
+      if (gameActive) {
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+        statusText.innerText = `Player ${currentPlayer}'s turn`;
+      }
     }
 
     function checkWinner() {
@@ -58,12 +152,20 @@
         if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
           statusText.innerText = `🎉 Player ${cells[a]} Wins!`;
           gameActive = false;
+          highlightWinner(combo);
         }
       });
       if (!cells.includes(null) && gameActive) {
-        statusText.innerText = "It's a Draw!";
+        statusText.innerText = "🤝 It's a Draw!";
         gameActive = false;
       }
+    }
+
+    function highlightWinner(combo) {
+      const allCells = document.querySelectorAll(".cell");
+      combo.forEach(i => {
+        allCells[i].classList.add("win");
+      });
     }
 
     function restartGame() {
@@ -76,28 +178,5 @@
 
     renderBoard();
   </script>
-
-  <style>
-    .board {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      gap: 5px;
-      justify-content: center;
-      margin: 20px auto;
-    }
-    .cell {
-      width: 100px;
-      height: 100px;
-      background: white;
-      color: black;
-      font-size: 36px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      border: 2px solid black;
-    }
-  </style>
 </body>
 </html>
-
