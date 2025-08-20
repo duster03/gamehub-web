@@ -1,82 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAMEHUB</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to the CSS file -->
-    <link rel="icon" type="image/x-icon" href="GAMEHUBLOGO.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAMEHUB</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="GAMEHUBLOGO.png">
+  <style>
+    /* Dropdown style */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      color: black;
+      min-width: 160px;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    .dropdown-content a {
+      color: black;
+      padding: 10px 14px;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background: #f1f1f1;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <header>
-        <div class="logo">        
-            <h1>GAMEHUB</h1>
-        </div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="games.html">Games</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="signup.html">Sign Up</a></li>
-                <!--<li><a href="profile.html">Profile</a></li>-->
-            </ul>
-        </nav>
-    </header>
+  <!-- Navbar -->
+  <header>
+    <div class="logo">        
+      <h1>GAMEHUB</h1>
+    </div>
+    <nav>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li id="login-item"><a href="login.html">Login</a></li>
+        <li id="signup-item"><a href="signup.html">Sign Up</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <!-- Hero Section -->
-    <!-- Hero Section with Video Background -->
-<section class="hero">
-  <video autoplay muted loop id="bg-video">
-    <source src="final.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-  <div class="hero-content">
-    <h1>Where Adventure Comes Alive</h1>
-    <p>Explore worlds beyond imagination and create your own reality.</p>
-    <a href="games.html" class="btn">Play Now</a>
-    <a href="about.html" class="btn">Learn More</a>
-  </div>
-</section>
-    <!-- Featured Games -->
-    <section class="featured">
-        <h2>Most Played Games</h2>
-        <div class="game-grid">
-            <div class="game">
-                <img src="snakep.png" alt="Game 1">
-                <h3>Snake Game</h3>
-                <p>Snake is a classic game where the player controls a growing snake to eat food while avoiding collisions.</p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <video autoplay muted loop id="bg-video">
+      <source src="final.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-content">
+      <h1>Where Adventure Comes Alive</h1>
+      <p>Explore worlds beyond imagination and create your own reality.</p>
+      <a href="games.html" class="btn">Play Now</a>
+      <a href="about.html" class="btn">Learn More</a>
+    </div>
+  </section>
+
+  <!-- Featured Games -->
+  <section class="featured">
+    <h2>Most Played Games</h2>
+    <div class="game-grid">
+      <div class="game">
+        <img src="snakep.png" alt="Game 1">
+        <h3>Snake Game</h3>
+        <p>Snake is a classic game where the player controls a growing snake to eat food while avoiding collisions.</p>
+      </div>
+      <div class="game">
+        <img src="logoActivity.png" alt="Game 2">
+        <h3>Memory Game</h3>
+        <p>A memory game challenges players to match pairs of cards by remembering their positions.</p>
+      </div>
+      <div class="game">
+        <img src="flyyy.jpg" alt="Game 3">
+        <h3>Flappy Bird</h3>
+        <p>Flappy Bird is a game where players navigate a bird through gaps between pipes by tapping to keep it flying.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 GAMEHUB. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    async function checkLogin() {
+      const token = localStorage.getItem("authToken");
+      const loginItem = document.getElementById("login-item");
+      const signupItem = document.getElementById("signup-item");
+      const navLinks = document.getElementById("nav-links");
+
+      if (token) {
+        try {
+          // Example API request to get user
+          const res = await fetch("/api/me", {
+            headers: { "Authorization": "Bearer " + token }
+          });
+          if (!res.ok) throw new Error("Invalid login");
+
+          const data = await res.json(); // { username: "Mahesh" }
+
+          // Hide login & signup
+          loginItem.style.display = "none";
+          signupItem.style.display = "none";
+
+          // Add Profile dropdown
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <div class="dropdown">
+              <a href="#">Profile ⬇</a>
+              <div class="dropdown-content">
+                <a href="#">👤 ${data.username}</a>
+                <a href="#" onclick="logout()">🚪 Logout</a>
+              </div>
             </div>
-            <div class="game">
-                <img src="logoActivity.png" alt="Game 2">
-                <h3>Memory Game</h3>
-                <p>A memory game challenges players to match pairs of cards by remembering their positions.</p>
-            </div>
-            <div class="game">
-                <img src="flyyy.jpg" alt="Game 3">
-                <h3>Flappy Bird</h3>
-                <p>Flappy Bird is a game where players navigate a bird through gaps between pipes by tapping to keep it flying.</p>
-            </div>
-        </div>
-    </section>
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 GAMEHUB. All Rights Reserved.</p>
-    </footer>
+          `;
+          navLinks.appendChild(li);
+        } catch (err) {
+          console.log("Not logged in");
+        }
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("authToken");
+      window.location.href = "login.html";
+    }
+
+    checkLogin();
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
