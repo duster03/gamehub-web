@@ -5,16 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Memory Match - Open World Reality</title>
   <link rel="stylesheet" href="../games.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1a1a1d, #4e4e50);
+      color: white;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin: 20px 0;
+      color: #ffcc00;
+      text-shadow: 2px 2px 10px black;
+    }
+
+    .game-container {
+      margin-top: 20px;
+    }
+
+    .memory-board {
+      display: grid;
+      grid-template-columns: repeat(4, 100px);
+      gap: 15px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+
+    .card {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(145deg, #222, #333);
+      color: white;
+      font-size: 2.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 10px;
+      border: 2px solid #ffcc00;
+      transition: transform 0.5s, background 0.3s, box-shadow 0.3s;
+      user-select: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #ffcc00;
+    }
+
+    .card.flipped {
+      background: #ffcc00;
+      color: black;
+      transform: rotateY(180deg);
+    }
+
+    button {
+      background: #ffcc00;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ffaa00;
+      transform: scale(1.1);
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>🃏 Memory Card Game</h1>
-    <nav><a href="../games.html">⬅ Back to Games</a></nav>
+    <h1>🃏 Memory Match Game</h1>
   </header>
 
   <main class="game-container">
     <div id="memory-board" class="memory-board"></div>
-    <button onclick="restartGame()">Restart</button>
+    <button onclick="restartGame()">🔄 Restart</button>
   </main>
 
   <script>
@@ -33,18 +103,21 @@
       cards.forEach((symbol, i) => {
         const card = document.createElement("div");
         card.classList.add("card");
+        
         if (flipped.includes(i) || matched.includes(symbol)) {
+          card.classList.add("flipped");
           card.innerText = symbol;
         } else {
           card.innerText = "?";
           card.addEventListener("click", () => flipCard(i));
         }
+        
         board.appendChild(card);
       });
     }
 
     function flipCard(i) {
-      if (flipped.length < 2 && !flipped.includes(i)) {
+      if (flipped.length < 2 && !flipped.includes(i) && !matched.includes(cards[i])) {
         flipped.push(i);
         renderBoard();
         if (flipped.length === 2) {
@@ -71,27 +144,5 @@
 
     restartGame();
   </script>
-
-  <style>
-    .memory-board {
-      display: grid;
-      grid-template-columns: repeat(4, 80px);
-      gap: 10px;
-      justify-content: center;
-    }
-    .card {
-      width: 80px;
-      height: 80px;
-      background: white;
-      color: black;
-      font-size: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      border: 2px solid black;
-    }
-  </style>
 </body>
 </html>
-
