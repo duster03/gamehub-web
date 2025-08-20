@@ -3,7 +3,7 @@ function openGame(game) {
 
   switch (game) {
     case "ticTacToe":
-      frame.src = "games/ticTacToe.html";
+      frame.src = "ticTacToe.html";
       break;
     case "snake":
       frame.src = "games/snake.html";
@@ -24,3 +24,4 @@ function openGame(game) {
 
   frame.style.display = "block";
 }
+
