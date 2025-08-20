@@ -12,11 +12,13 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
   const result = await response.json();
 
-  if (response.ok) {
+  if (response.ok && result.token) {
+    // Save token in localStorage
+    localStorage.setItem("authToken", result.token);
+
     alert("Login successful!");
-    // redirect to profile/dashboard
-    window.location.href = "index.html";
+    window.location.href = "index.html"; // redirect after login
   } else {
-    alert(result.error);
+    alert(result.error || "Login failed");
   }
 });
